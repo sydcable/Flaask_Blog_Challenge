@@ -76,10 +76,23 @@ def edit(id):
     post = get_post(id)
 
     #determine if the page was requested with GET or POST
+    #If POST, proccess the form data. Get the data and validate it. Update the post and redirect to the homepage
     if request.method == 'POST':
-        pass
-        #If POST, proccess the form data. Get the data and validate it. Update the post and redirect to the homepage
+        #get the title and content
+        title = request.form['title']
+        content = request.form['content']
 
+        #if no title or content flash an error message
+        if not title:
+            flash("Title is required")
+        elif not content:
+            flash("Content is required")
+        else:
+            conn = get_db_connection()
+            conn.execute('UPDATE posts SET title = ?, content = ? WHERE id = ?', (title, content, id))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('index'))
 
     #If GET then display page
     return render_template('edit.html', post=post)
