@@ -59,4 +59,17 @@ def create():
 
     return render_template('create.html')
 
+#route to edit a post. Load page with get or post
+#pass post id as url parameter
+@app.route('/<int:id>/edit/', methods=('GET', 'POST'))
+def edit(id):
+    #get the post from the database with a select query for the post with that id
+    
+    #determine if the page was requested with GET or POST
+    #If GET then display page
+    #If POST, proccess the form data. Get the data and validate it. Update the post and redirect to the homepage
+
+
+    return render_template('edit.html')
+
 app.run(port=5008)

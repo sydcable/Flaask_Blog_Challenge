@@ -7,7 +7,7 @@
         <br>
         <input type="text" name="title"
                placeholder="Post title"
-               value="{{ request.form['title'] }}"></input>
+               value="{{ request.form['title'] or post['title'] }}"></input>
         <br>
 
         <label for="content">Post Content</label>
@@ -16,7 +16,7 @@
                   placeholder="Post content"
                   rows="15"
                   cols="60"
-                  >{{ request.form['content'] }}</textarea>
+                  >{{ request.form['content'] or post['content'] }}</textarea>
         <br>
         <button type="submit">Submit</button>
     </form>
