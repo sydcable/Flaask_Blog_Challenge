@@ -19,6 +19,15 @@ def get_db_connection():
     #return the connection object
     return conn
 
+#funtion to retrieve a post from the database
+def get_post(post_id):
+    conn = get_db_connection()
+    post = conn.execute('SELECT * FROM posts WHERE id = ?', (post_id,)).fetchone()
+    conn.close()
+
+    if post is None:
+        abort(404)
+    return post
 
 # use the app.route() decorator to create a Flask view function called index()
 @app.route('/')
@@ -64,12 +73,15 @@ def create():
 @app.route('/<int:id>/edit/', methods=('GET', 'POST'))
 def edit(id):
     #get the post from the database with a select query for the post with that id
-    
+    post = get_post(id)
+
     #determine if the page was requested with GET or POST
+    if request.method == 'POST':
+        pass
+        #If POST, proccess the form data. Get the data and validate it. Update the post and redirect to the homepage
+
+
     #If GET then display page
-    #If POST, proccess the form data. Get the data and validate it. Update the post and redirect to the homepage
-
-
-    return render_template('edit.html')
+    return render_template('edit.html', post=post)
 
 app.run(port=5008)
